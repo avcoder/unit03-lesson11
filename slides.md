@@ -44,32 +44,88 @@ transition: slide-left
 transition: slide-left
 ---
 
-# Creating a JWT (pg.1)
+# JWT (pg.1)
 
+1. `npm i jsonwebtoken`
+1. in `.env` create a new entry `JWT_SECRET=whatever` 
+1. create a new file `/src/modules/auth.js`:
+  ```js
+  import jwt from 'jsonwebtoken'
 
----
-transition: slide-left
----
-
-# Creating a JWT (pg.2)
-
----
-transition: slide-left
----
-
-# Creating a JWT (pg.3)
-
----
-transition: slide-left
----
-
-# Exercise: 
+  export const createJWT = ({id, username}) => {
+    const token = jwt.sign({ id, username }, process.env.JWT_SECRET); 
+    return token; // token is a string
+  }
+  ```
+1. Let's test this so far and see what we get
 
 ---
 transition: slide-left
 ---
 
-# Explore 
+# JWT (pg.2)
+Need to create a bodyguard function that will protect our routes based on whether the request has the token
+
+1. In same auth.js file
+  ```js
+  export const protect = (req, res) => {
+    const bearer = req.headers.authorization;
+
+    if (!bearer) {
+      res.status(401);
+      res.json({ message: 'not authorized' });
+      return;
+    }
+  }
+  ```
+1. For now, import our protect function in `server.js` then change our existing `app.use('/api'...)`
+  ```js
+  import { protect } from './modules/auth.js'
+
+  // Now, a request won't even make it to router if it can't get past protect
+  app.use('/api', protect, router)
+  ```
+1. Let's test what we have so far. Did you get back the `401` "not authorized" message?
+
+---
+transition: slide-left
+---
+
+# JWT (pg.3)
+
+1. Q: why did it reject again?
+   - A: request was missing a Bearer token (which usually is contained in the Header)
+1. So let's play hacker and put in a fake bearer token in the request
+   - In Postman, underneath the url, click "Auth" tab > in dropdown choose "Bearer Token" > enter any string then test again
+   - Did we pass the protect guard function?
+1. Let's inspect the Bearer token in Headers on server?
+  - Ask ChatGPT: `in express.js, how can i view the request's headers.  in particular, the bearer token.  I just want to console.log it`
+
+---
+transition: slide-left
+---
+
+# JWT (pg.4) 
+
+1. We need to now check if the token is real and not fake.
+1. Continuing after `if (!bearer) { }` block of code
+  ```js
+  const [, token] = bearer.split(" ");
+
+  if (!token) {
+    res.status(401);
+    res.json({ message: 'not a valid token' });
+    return;
+  }
+  ```
+
+---
+transition: slide-left
+---
+
+
+
+# JWT (pg.5) 
 
 
 ---
