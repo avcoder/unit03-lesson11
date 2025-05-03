@@ -285,17 +285,26 @@ Finally, hashing the password
 
 1. In `/src/handlers/user.js`:
   ```js
+  import User from "../models/user.js"; // will handle DB interactions
   import { hashPassword } from "../modules/auth.js";
+  import { createJWT } from "../modules/auth.js";
 
   const createUser = async ({ username, password }) => {
-    console.log(username, password);
-    return await User.create({
+    const user = await User.create({
       username,
       password: await hashPassword(password),
     });
+
+    const token = createJWT(user);
+    res.json({ token });
+  };
+
+  export default {
+    createUser,
   };
   ```
 1. Test via POSTMAN: did it create a new user entry in mongoDB with the password being hashed?
+1. Did the server return `201` and also a token? (click "Body" tab to the left of `201`) 
 
 ---
 layout: image-right
@@ -326,7 +335,10 @@ class: text-left
 transition: slide-left
 ---
 
-# Aasdf
+# JWT (pg.14)
+Let's create sign-in functionality
+
+1. 
 
 ---
 transition: slide-left
