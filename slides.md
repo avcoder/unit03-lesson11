@@ -81,7 +81,14 @@ transition: slide-left
     next();
   };
   ```
-1. Let's test this in Postman to see how the client can pass an authorization token via the request header
+1. import our protect function in `server.js` then change our existing `app.use('/api'...)`
+  ```js
+  import { protect } from './modules/auth.js'
+
+  // Now, a request won't even make it to router if it can't get past protect
+  app.use('/api', protect, router)
+  ```
+1. Let's test this in Postman by NOT sending any token to see if we get "not authorized"
 
 ---
 transition: slide-left
@@ -102,13 +109,6 @@ Continue modifying our protect function:
     }
   }
   ```
-1. For now, import our protect function in `server.js` then change our existing `app.use('/api'...)`
-  ```js
-  import { protect } from './modules/auth.js'
-
-  // Now, a request won't even make it to router if it can't get past protect
-  app.use('/api', protect, router)
-  ```
 1. Let's test what we have so far. Did you get back the `401` "not authorized" message?
 
 ---
@@ -116,6 +116,7 @@ transition: slide-left
 ---
 
 # JWT (pg.4)
+Continue modifying our protect function:
 
 1. Q: why did it reject again?
    - A: request was missing a Bearer token (which usually is contained in the Header)
