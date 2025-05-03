@@ -264,11 +264,15 @@ transition: slide-left
 Before we use our auth.js, create a new /user route
 
 1. Create all folders/files necessary to create a new user route
-1. Ensure you have the following:
+1. Ensure you have completed the following:
    - `router.post("/user", userController.createUser);`
    - `/src/controllers/userController.js`
    - `/src/handlers/user.js`
-   - `/src/models/user.js`
+   - `/src/models/user.js` 
+      - should have only 2 fields: username { String, required, unique}
+      - and password { String, required }
+   - Compass should now show new `users` collection within `foodtruck` database
+   - Test via Postman: see if POSTing username/password creates a new user in mongoDB
 
 
 ---
