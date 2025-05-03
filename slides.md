@@ -284,9 +284,8 @@ transition: slide-left
 
 1. In `/src/handlers/user.js`:
   ```js
-  import User from "../models/user.js"; 
-  import { hashPassword } from "../modules/auth.js"; // finally we get to use hashing
-  import { createJWT } from "../modules/auth.js";
+  import User from "../models/user.js"; // will handle DB interactions
+  import { hashPassword, comparePasswords } from "../modules/auth.js";
 
   const createUser = async ({ username, password }) => {
     const user = await User.create({
@@ -294,8 +293,7 @@ transition: slide-left
       password: await hashPassword(password),
     });
 
-    const token = createJWT(user);
-    res.json({ token });
+    return user;
   };
 
   export default {
@@ -304,6 +302,7 @@ transition: slide-left
   ```
 1. Test via POSTMAN: did it create a new user entry in mongoDB with the password being hashed?
 1. Did the server return `201` and also a token? (click "Body" tab to the left of `201` to check) 
+1. What happens if a user attempts to register using existing username in database?  Try to gracefully handle the error.
 
 ---
 layout: image-right
@@ -334,16 +333,68 @@ class: text-left
 transition: slide-left
 ---
 
-# JWT (pg.14)
+# JWT: Login (pg.1)
 Let's create sign-in functionality
 
-1. 
+1. When users login, thereby sending username/password, how will you authenticate? (what exactly will you be comparing?)
+1. Let's create a `/login` route
+1. In `router.js`
+  ```js
+  router.post("/login", userController.loginUser);
+  ```
 
 ---
 transition: slide-left
 ---
 
-# Exercise: 
+# JWT: Login (pg.2)
+
+1. in `/src/controlllers/userController.js`
+  ```js
+  const loginUser = async (req, res) => {
+    const { username, password } = req.body;
+    const user = await userHandler.loginUser({ username, password });
+
+    if (!user) {
+      res.status(401);
+      res.json({ message: "invalid password" });
+      return;
+    }
+
+    const token = createJWT(user);
+    res.status(200).json({ token });
+  };
+  ```
+
+---
+transition: slide-left
+---
+
+# JWT: Login (pg.3)
+
+1. in `/src/handlers/user.js`
+  ```js
+  const loginUser = async ({ username, password }) => {
+    const user = await User.findOne({ username });
+    const isValid = await comparePasswords(password, user.password);
+
+    return isValid ? user : null;
+  };
+
+  export default {
+    createUser,
+    loginUser,
+  };
+  ```
+- Test via Postman: see if POSTing username/password via `/login` signs in a user; IF successful, did you see a token?
+
+---
+transition: slide-left
+---
+
+# JWT: Login (pg.4)
+
+
 
 ---
 transition: slide-left
