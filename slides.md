@@ -338,9 +338,12 @@ Let's create sign-in functionality
 
 1. When users login, thereby sending username/password, how will you authenticate? (what exactly will you be comparing?)
 1. Let's create a `/login` route
-1. In `router.js`
+1. In `server.js`
   ```js
-  router.post("/login", userController.loginUser);
+  import userController from "./controllers/userController.js";
+
+  app.post("/user", userController.createUser);
+  app.post("/login", userController.loginUser);
   ```
 
 ---
@@ -393,6 +396,18 @@ transition: slide-left
 ---
 
 # JWT: Login (pg.4)
+
+1. Let's put back our `protect` guard function. In `server.js`
+  ```js
+  import { protect } from "./modules/auth.js";
+
+  app.use("/api", protect, router);
+  ```
+1. Test it
+  - create a new user
+  - login using user credentials but remember to also pass in authorization token
+  - Try GETting `/api/order` -- Does it work?
+  - Try GETting `/api/order` without the token?  Does it fail?
 
 
 
