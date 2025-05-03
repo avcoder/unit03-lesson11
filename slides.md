@@ -269,10 +269,11 @@ Before we use our auth.js, create a new /user route
    - `/src/controllers/userController.js`
    - `/src/handlers/user.js`
    - `/src/models/user.js` 
-      - should have only 2 fields: username { String, required, unique}
-      - and password { String, required }
+      - should have only 2 fields: username `{ String, required, unique}`
+      - and password `{ String, required }`
    - Compass should now show new `users` collection within `foodtruck` database
-   - Test via Postman: see if POSTing username/password creates a new user in mongoDB
+   - Test via Postman: see if POSTing username/password creates a new user in mongoDB (may have to remove our earlier `protect` function to test this)
+1. Next - incorporate the hashing functionality...Goto next slide
 
 
 ---
