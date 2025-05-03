@@ -415,11 +415,15 @@ transition: slide-left
 transition: slide-left
 ---
 
-# Exercise: Refactor Login
+# Exercise: 
+Refactor Login
 
-1.  Senior leadership has decided they want the `/user` and `/login` route inside the `/api` route
-1. Refactor the necessary files 
-1. Ensure routes and all functionality still works as before
+Scenario: Senior leadership has decided that as their app grows, they made a mistake and now want the `/user` and `/login` route inside the `/api` route
+
+Refactor the necessary files:
+1. Ensure `/api/user` route and all related functionality works as before
+1. Ensure `/api/login` route and all functionality still works as before
+
 
 
 ---
