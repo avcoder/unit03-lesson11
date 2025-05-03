@@ -302,7 +302,7 @@ transition: slide-left
   ```
 1. Test via POSTMAN: did it create a new user entry in mongoDB with the password being hashed?
 1. Did the server return `201` and also a token? (click "Body" tab to the left of `201` to check) 
-1. What happens if a user attempts to register using existing username in database?  Try to gracefully handle the error.
+1. Try registering again using existing username in database?  Gracefully [handle the error](https://unit03-lesson10.netlify.app/presenter/13).
 
 ---
 layout: image-right
