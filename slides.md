@@ -75,7 +75,8 @@ transition: slide-left
 1. In same auth.js file:
   ```js
   export const protect = (req, res, next) => {
-    const bearer = req.headers.authorization;
+    // console.log(req.headers)
+    const bearer = req.headers.authorization; 
 
     console.log("in protect, req.headers.authorization: ", bearer);
     next();
@@ -144,6 +145,8 @@ transition: slide-left
 
   ```
 1. Test it in Postman; try passing a space character for Bearer token. Do you see "not a valid token"
+- 👮‍♀️ From a security point of view, is it wise to send these detailed error messages?
+- 👮‍♀️ If you were making a login form, what error messages should you display if username fails? if password fails?
 
 ---
 transition: slide-left
@@ -162,17 +165,18 @@ transition: slide-left
   } catch (e) {
     // console.error(e);
     res.status(401);
-    res.send("Not authorized");
+    res.json({ message: "token malformed" });
   }
   ```
-1. Test it: pass any string as Bearer token
+1. Test it: pass any string as Bearer token. Do you see "malformed token"?
 
 ---
 transition: slide-left
 ---
 
 
-# JWT (pg) 
+# JWT (pg. 7) 
+How does the client/browser get a token in the first place?
 
 
 ---
