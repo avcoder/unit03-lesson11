@@ -442,26 +442,6 @@ transition: slide-left
    - be redirected to GET / page 
    - view all the existing orders
 
----
-transition: slide-left
----
-
-# asdf
-
----
-transition: slide-left
----
-
-# asdf
-
----
-transition: slide-left
----
-
-# asdf
-
-<!--
--->
 
 ---
 transition: slide-left
