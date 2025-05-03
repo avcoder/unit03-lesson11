@@ -58,17 +58,41 @@ transition: slide-left
   }
   ```
 1. Let's test this so far and see what we get
+1. in index.js:
+  ```js
+  import { createJWT } from "./modules/auth.js";
+
+  console.log(createJWT({ id: "2", username: "al" }));
+  ```
 
 ---
 transition: slide-left
 ---
 
 # JWT (pg.2)
-Need to create a bodyguard function that will protect our routes based on whether the request has the token
+
+1. Start creating a guard function that will protect our routes based on whether the request has the token
+1. In same auth.js file:
+  ```js
+  export const protect = (req, res, next) => {
+    const bearer = req.headers.authorization;
+
+    console.log("in protect, req.headers.authorization: ", bearer);
+    next();
+  };
+  ```
+1. Let's test this in Postman to see how the client can pass an authorization token via the request header
+
+---
+transition: slide-left
+---
+
+# JWT (pg.3)
+Continue modifying our protect function:
 
 1. In same auth.js file
   ```js
-  export const protect = (req, res) => {
+  export const protect = (req, res, next) => {
     const bearer = req.headers.authorization;
 
     if (!bearer) {
@@ -91,7 +115,7 @@ Need to create a bodyguard function that will protect our routes based on whethe
 transition: slide-left
 ---
 
-# JWT (pg.3)
+# JWT (pg.4)
 
 1. Q: why did it reject again?
    - A: request was missing a Bearer token (which usually is contained in the Header)
@@ -105,7 +129,7 @@ transition: slide-left
 transition: slide-left
 ---
 
-# JWT (pg.4) 
+# JWT (pg.5) 
 
 1. We need to now check if the token is real and not fake.
 1. Continuing after `if (!bearer) { }` block of code
@@ -117,7 +141,19 @@ transition: slide-left
     res.json({ message: 'not a valid token' });
     return;
   }
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = payload;
+    console.log(payload);
+    next();
+  } catch (e) {
+    // console.error(e);
+    res.status(401);
+    res.send("Not authorized");
+  }
   ```
+1. Test it
 
 ---
 transition: slide-left
@@ -125,7 +161,7 @@ transition: slide-left
 
 
 
-# JWT (pg.5) 
+# JWT (pg) 
 
 
 ---
