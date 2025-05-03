@@ -415,7 +415,11 @@ transition: slide-left
 transition: slide-left
 ---
 
-# asdf
+# Exercise: Refactor Login
+
+1.  Senior leadership has decided they want the `/user` and `/login` route inside the `/api` route
+1. Refactor the necessary files 
+1. Ensure routes and all functionality still works as before
 
 
 ---
