@@ -180,6 +180,8 @@ How does the client/browser get a token in the first place?
 
 - IF a user registers on our website, we give them a JSON web token -- that's like their identification card
 - Then if they wish to login, they have to show their identification card (JWT)
+
+BUT FIRST, we need to talk about how to store passwords:
 - 👮‍♀️ Do you think it's wise to store your user's passwords in plain text, in your database?
 
 
@@ -258,7 +260,16 @@ transition: slide-left
 transition: slide-left
 ---
 
-# asdf
+# Exercise: JWT (pg.12)
+Before we use our auth.js, create a new /user route
+
+1. Create all folders/files necessary to create a new user route
+1. Ensure you have the following:
+   - `router.post("/user", userController.createUser);`
+   - `/src/controllers/userController.js`
+   - `/src/handlers/user.js`
+   - `/src/models/user.js`
+
 
 ---
 transition: slide-left
