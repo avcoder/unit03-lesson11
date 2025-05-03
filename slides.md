@@ -89,6 +89,7 @@ transition: slide-left
   app.use('/api', protect, router)
   ```
 1. Let's test this in Postman by NOT sending any token to see if we get "not authorized"
+1. Ask chatGPT: `using javascript's fetch method, how do you pass an authorization token in the header?`
 
 ---
 transition: slide-left
@@ -123,8 +124,7 @@ Continue modifying our protect function:
 1. So let's play hacker and put in a fake bearer token in the request
    - In Postman, underneath the url, click "Auth" tab > in dropdown choose "Bearer Token" > enter any string then test again
    - Did we pass the protect guard function?
-1. Let's inspect the Bearer token in Headers on server?
-  - Ask ChatGPT: `in express.js, how can i view the request's headers.  in particular, the bearer token.  I just want to console.log it`
+1. Thus, we need to now check if the token is real and not fake.
 
 ---
 transition: slide-left
@@ -132,8 +132,7 @@ transition: slide-left
 
 # JWT (pg.5) 
 
-1. We need to now check if the token is real and not fake.
-1. Continuing after `if (!bearer) { }` block of code
+1. After `if (!bearer) { }` block of code
   ```js
   const [, token] = bearer.split(" ");
 
@@ -143,6 +142,18 @@ transition: slide-left
     return;
   }
 
+  ```
+1. Test it in Postman; try passing a space character for Bearer token. Do you see "not a valid token"
+
+---
+transition: slide-left
+---
+
+# JWT (pg.6)
+
+1. After `if(!token) { }` block of code:
+
+  ```js
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload;
@@ -154,12 +165,11 @@ transition: slide-left
     res.send("Not authorized");
   }
   ```
-1. Test it
+1. Test it: pass any string as Bearer token
 
 ---
 transition: slide-left
 ---
-
 
 
 # JWT (pg) 
