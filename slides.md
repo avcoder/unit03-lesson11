@@ -280,19 +280,22 @@ Before we use our auth.js, create a new /user route
 transition: slide-left
 ---
 
-# asdf
+# Exercise continued: JWT (pg.13)
+Finally, hashing the password
 
----
-transition: slide-left
----
+1. In `/src/handlers/user.js`:
+  ```js
+  import { hashPassword } from "../modules/auth.js";
 
-# Aasdf
-
----
-transition: slide-left
----
-
-# Exercise: 
+  const createUser = async ({ username, password }) => {
+    console.log(username, password);
+    return await User.create({
+      username,
+      password: await hashPassword(password),
+    });
+  };
+  ```
+1. Test via POSTMAN: did it create a new user entry in mongoDB with the password being hashed?
 
 ---
 layout: image-right
@@ -318,6 +321,18 @@ class: text-left
 <!-- 
 - take attendance
 -->
+
+---
+transition: slide-left
+---
+
+# Aasdf
+
+---
+transition: slide-left
+---
+
+# Exercise: 
 
 ---
 transition: slide-left
