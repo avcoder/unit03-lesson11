@@ -281,12 +281,11 @@ transition: slide-left
 ---
 
 # Exercise continued: JWT (pg.13)
-Finally, hashing the password
 
 1. In `/src/handlers/user.js`:
   ```js
-  import User from "../models/user.js"; // will handle DB interactions
-  import { hashPassword } from "../modules/auth.js";
+  import User from "../models/user.js"; 
+  import { hashPassword } from "../modules/auth.js"; // finally we get to use hashing
   import { createJWT } from "../modules/auth.js";
 
   const createUser = async ({ username, password }) => {
