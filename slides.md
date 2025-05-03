@@ -303,7 +303,7 @@ transition: slide-left
   };
   ```
 1. Test via POSTMAN: did it create a new user entry in mongoDB with the password being hashed?
-1. Did the server return `201` and also a token? (click "Body" tab to the left of `201`) 
+1. Did the server return `201` and also a token? (click "Body" tab to the left of `201` to check) 
 
 ---
 layout: image-right
