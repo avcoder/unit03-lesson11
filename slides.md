@@ -178,24 +178,81 @@ transition: slide-left
 # JWT (pg. 7) 
 How does the client/browser get a token in the first place?
 
+- IF a user registers on our website, we give them a JSON web token -- that's like their identification card
+- Then if they wish to login, they have to show their identification card (JWT)
+- 👮‍♀️ Do you think it's wise to store your user's passwords in plain text, in your database?
+
+
+
+---
+layout: image
+transition: slide-left
+image: /assets/hashing.png
+backgroundSize: 500px 400px
+---
+
+# JWT: Hashing (pg. 8)
+
+---
+layout: image
+transition: slide-left
+image: /assets/hacker.png
+backgroundSize: 500px 400px
+---
+
+# JWT: Hashing (pg. 9)
 
 ---
 transition: slide-left
 ---
 
-# Explore 
+# JWT (pg.10)
+
+1. `npm i bcrypt`
+1. In same auth.js, Let's create functions that hash our passwords:
+  ```js
+  import bcrypt from "bcrypt";
+
+  export const hashPassword = (password) => {
+    const SALT = 10;
+    const hashedPassword = bcrypt.hash(password, SALT);
+    // console.log(hashedPassword); fyi - may need to async/await to see this
+    return hashedPassword;
+  };
+  ```
+1. Test it. in server.js
+   - `import { protect, hashPassword } from "./modules/auth.js";`
+   - then `hashPassword("kiwi")`
+
+
 
 ---
 transition: slide-left
 ---
 
-# asdf
+# JWT (pg. 11)
 
----
-transition: slide-left
----
-
-# asdf
+1. In same auth.js, after our `hashPassword` function:
+  ```js
+  export const comparePasswords = (password, hash) => {
+    // is plain text password the same as hashed password in db?
+    const isMatch = bcrypt.compare(password, hash);
+    console.log(isMatch); // may need to async/await to see this
+    return isMatch;
+  };
+  ```
+1. Test it.
+   - Copy from terminal one of the hashed passwords
+   - In server.js, Paste hashed password below
+   ```js
+    const result = comparePasswords(
+      "kiwi",
+      "$2b$10$NDP9ipimMkH27hGpdoHbCumZGwTmpfVmuJz82sRwR.zg2zFktWoSS"
+    );
+    console.log("result: ", result);
+   ```
+1. Did 'kiwi' match to the hashed password?
+1. What happens if you just remove one character from hashed password?
 
 ---
 transition: slide-left
@@ -232,11 +289,8 @@ class: text-left
 # 10 minute break
 
 🍦 Cool Tips, Trends and Resources:
-- 🎸 [Default h1 styles are changing](https://developer.mozilla.org/en-US/blog/h1-element-styles)
-- ⚡ [JSX Over the Wire](https://overreacted.io/jsx-over-the-wire/)
-- 🩳 [Pocketbase](https://pocketbase.io/)
-- 🔎 [SQL Noir](https://www.sqlnoir.com/)
-- 🌤️ [Sunsetting Create React App](https://react.dev/blog/2025/02/14/sunsetting-create-react-app)
+- ✌️ [Authentication Overview](https://www.loom.com/share/f8f5769ea88c4e6cb2170beee656f334)
+- ✌️ [Authentication in more Detail](https://www.loom.com/share/75e6cb8654a649e3b4bee5d7f4af1ec7)
 
 <br>
 <hr>
