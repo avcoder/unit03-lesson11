@@ -430,18 +430,40 @@ Refactor the necessary files:
 transition: slide-left
 ---
 
+# EJS templates 
+
+1. `npm i ejs`
+1. Set view engine.  In `server.js` after your `app = express()` statement:
+  ```js
+  app.set('view engine', 'ejs');
+  app.set('views', __dirname + '/views')
+  ```
+1. For now, create a new folder/file in `/src/views/login.ejs` and put create a basic HTML page using the following ejs variables:
+  ```html
+  <!DOCTYPE html>
+  <html>
+  <head><!-- note: we are using variables in HTML (see below). Remind you of anything we've done in the past? -->
+      <title><%= title %></title> 
+  </head>
+  <body>
+      <h1>Welcome, <%= user %>!</h1>
+  </body>
+  </html>
+  ```
+1. Pass variables from route, then start your server
+  ```js
+  app.get('/', (req, res) => {
+      res.render('index', { title: 'Home Page', user: 'Al' });
+  });
+  ```
+
+---
+transition: slide-left
+---
+
 # Exercise
 
-1. Try incorporating the signup, the login, and the GET orders screen using the front end of [foodtruck-app](https://github.com/avcoder/foodtruck-app)
-2. Fill in all 6 blanks in order to make this work
-3. If successful, you should be able to:
-   - sign in (which creates new user in db)
-   - be redirected to login page
-   - upon successful login
-   - should get a Token which is stored in localStorage (see Application tab > Local Storage > http://localhost)
-   - be redirected to GET / page 
-   - view all the existing orders
-
+1. Apply what you've just learned and using our foodtruck app (or your personal app), create a login/signin page, and a register/signup page
 
 ---
 transition: slide-left
