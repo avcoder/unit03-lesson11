@@ -315,6 +315,7 @@ class: text-left
 # 10 minute break
 
 🍦 Cool Tips, Trends and Resources:
+- 🕵️ [JWT Decoder](https://jwt.io/)
 - ✌️ [Authentication Overview](https://www.loom.com/share/f8f5769ea88c4e6cb2170beee656f334)
 - ✌️ [Authentication in more Detail](https://www.loom.com/share/75e6cb8654a649e3b4bee5d7f4af1ec7)
 
